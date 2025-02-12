@@ -41,7 +41,7 @@ public class MetadataType<T> {
     public static final MetadataType<Vector3i> POSITION = new MetadataType<>(MinecraftTypes::readPosition, MinecraftTypes::writePosition, ObjectEntityMetadata::new);
     public static final MetadataType<Optional<Vector3i>> OPTIONAL_POSITION = new MetadataType<>(optionalReader(MinecraftTypes::readPosition), optionalWriter(MinecraftTypes::writePosition), ObjectEntityMetadata::new);
     public static final MetadataType<Direction> DIRECTION = new MetadataType<>(MinecraftTypes::readDirection, MinecraftTypes::writeDirection, ObjectEntityMetadata::new);
-    public static final MetadataType<Optional<UUID>> OPTIONAL_UUID = new MetadataType<>(optionalReader(MinecraftTypes::readUUID), optionalWriter(MinecraftTypes::writeUUID), ObjectEntityMetadata::new);
+    public static final MetadataType<Optional<UUID>> OPTIONAL_LIVING_ENTITY_REFERENCE = new MetadataType<>(optionalReader(MinecraftTypes::readUUID), optionalWriter(MinecraftTypes::writeUUID), ObjectEntityMetadata::new);
     public static final IntMetadataType BLOCK_STATE = new IntMetadataType(MinecraftTypes::readVarInt, MinecraftTypes::writeVarInt, IntEntityMetadata::new);
     public static final IntMetadataType OPTIONAL_BLOCK_STATE = new IntMetadataType(MinecraftTypes::readVarInt, MinecraftTypes::writeVarInt, IntEntityMetadata::new);
     public static final MetadataType<NbtMap> NBT_TAG = new MetadataType<>(MinecraftTypes::readCompoundTag, MinecraftTypes::writeAnyTag, ObjectEntityMetadata::new);
@@ -53,6 +53,7 @@ public class MetadataType<T> {
     public static final IntMetadataType CAT_VARIANT = new IntMetadataType(MinecraftTypes::readVarInt, MinecraftTypes::writeVarInt, IntEntityMetadata::new);
     public static final MetadataType<Holder<WolfVariant>> WOLF_VARIANT = new MetadataType<>(MinecraftTypes::readWolfVariant, MinecraftTypes::writeWolfVariant, ObjectEntityMetadata::new);
     public static final IntMetadataType FROG_VARIANT = new IntMetadataType(MinecraftTypes::readVarInt, MinecraftTypes::writeVarInt, IntEntityMetadata::new);
+    public static final MetadataType<Holder<PigVariant>> PIG_VARIANT = new MetadataType<>(MinecraftTypes::readPigVariant, MinecraftTypes::writePigVariant, ObjectEntityMetadata::new);
     public static final MetadataType<Optional<GlobalPos>> OPTIONAL_GLOBAL_POS = new MetadataType<>(optionalReader(MinecraftTypes::readGlobalPos), optionalWriter(MinecraftTypes::writeGlobalPos), ObjectEntityMetadata::new);
     public static final MetadataType<Holder<PaintingVariant>> PAINTING_VARIANT = new MetadataType<>(MinecraftTypes::readPaintingVariant, MinecraftTypes::writePaintingVariant, ObjectEntityMetadata::new);
     public static final MetadataType<SnifferState> SNIFFER_STATE = new MetadataType<>(MinecraftTypes::readSnifferState, MinecraftTypes::writeSnifferState, ObjectEntityMetadata::new);

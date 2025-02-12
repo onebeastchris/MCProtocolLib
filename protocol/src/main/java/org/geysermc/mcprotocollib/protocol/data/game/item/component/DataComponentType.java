@@ -48,6 +48,7 @@ public class DataComponentType<T> {
     public static final DataComponentType<UseCooldown> USE_COOLDOWN = new DataComponentType<>("use_cooldown", ItemTypes::readUseCooldown, ItemTypes::writeUseCooldown, ObjectDataComponent::new);
     public static final DataComponentType<Key> DAMAGE_RESISTANT = new DataComponentType<>("damage_resistant", MinecraftTypes::readResourceLocation, MinecraftTypes::writeResourceLocation, ObjectDataComponent::new);
     public static final DataComponentType<ToolData> TOOL = new DataComponentType<>("tool", ItemTypes::readToolData, ItemTypes::writeToolData, ObjectDataComponent::new);
+    public static final DataComponentType<Weapon> WEAPON = new DataComponentType<>("weapon", ItemTypes::readWeapon, ItemTypes::writeWeapon, ObjectDataComponent::new);
     public static final IntComponentType ENCHANTABLE = new IntComponentType("enchantable", MinecraftTypes::readVarInt, MinecraftTypes::writeVarInt, IntDataComponent::new);
     public static final DataComponentType<Equippable> EQUIPPABLE = new DataComponentType<>("equippable", ItemTypes::readEquippable, ItemTypes::writeEquippable, ObjectDataComponent::new);
     public static final DataComponentType<HolderSet> REPAIRABLE = new DataComponentType<>("repairable", MinecraftTypes::readHolderSet, MinecraftTypes::writeHolderSet, ObjectDataComponent::new);
@@ -63,6 +64,7 @@ public class DataComponentType<T> {
     public static final DataComponentType<List<ItemStack>> CHARGED_PROJECTILES = new DataComponentType<>("charged_projectiles", listReader(MinecraftTypes::readItemStack), listWriter(MinecraftTypes::writeItemStack), ObjectDataComponent::new);
     public static final DataComponentType<List<ItemStack>> BUNDLE_CONTENTS = new DataComponentType<>("bundle_contents", listReader(MinecraftTypes::readItemStack), listWriter(MinecraftTypes::writeItemStack), ObjectDataComponent::new);
     public static final DataComponentType<PotionContents> POTION_CONTENTS = new DataComponentType<>("potion_contents", ItemTypes::readPotionContents, ItemTypes::writePotionContents, ObjectDataComponent::new);
+    public static final DataComponentType<Float> POTION_DURATION_SCALE = new DataComponentType<>("potion_duration_scale", ByteBuf::readFloat, ByteBuf::writeFloat, ObjectDataComponent::new);
     public static final DataComponentType<List<SuspiciousStewEffect>> SUSPICIOUS_STEW_EFFECTS = new DataComponentType<>("suspicious_stew_effects", listReader(ItemTypes::readStewEffect), listWriter(ItemTypes::writeStewEffect), ObjectDataComponent::new);
     public static final DataComponentType<WritableBookContent> WRITABLE_BOOK_CONTENT = new DataComponentType<>("writable_book_content", ItemTypes::readWritableBookContent, ItemTypes::writeWritableBookContent, ObjectDataComponent::new);
     public static final DataComponentType<WrittenBookContent> WRITTEN_BOOK_CONTENT = new DataComponentType<>("written_book_content", ItemTypes::readWrittenBookContent, ItemTypes::writeWrittenBookContent, ObjectDataComponent::new);
