@@ -11,7 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ItemAttributeModifiers {
     private final List<Entry> modifiers;
-    private final boolean showInTooltip;
 
     @Data
     @AllArgsConstructor

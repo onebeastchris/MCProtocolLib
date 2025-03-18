@@ -16,6 +16,7 @@ import org.geysermc.mcprotocollib.protocol.data.game.item.ItemStack;
 import org.geysermc.mcprotocollib.protocol.data.game.item.component.type.BooleanDataComponent;
 import org.geysermc.mcprotocollib.protocol.data.game.item.component.type.IntDataComponent;
 import org.geysermc.mcprotocollib.protocol.data.game.item.component.type.ObjectDataComponent;
+import org.geysermc.mcprotocollib.protocol.data.game.level.sound.Sound;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class DataComponentType<T> {
     public static final IntComponentType MAX_STACK_SIZE = new IntComponentType("max_stack_size", MinecraftTypes::readVarInt, MinecraftTypes::writeVarInt, IntDataComponent::new);
     public static final IntComponentType MAX_DAMAGE = new IntComponentType("max_damage", MinecraftTypes::readVarInt, MinecraftTypes::writeVarInt, IntDataComponent::new);
     public static final IntComponentType DAMAGE = new IntComponentType("damage", MinecraftTypes::readVarInt, MinecraftTypes::writeVarInt, IntDataComponent::new);
-    public static final DataComponentType<Unbreakable> UNBREAKABLE = new DataComponentType<>("unbreakable", ItemTypes::readUnbreakable, ItemTypes::writeUnbreakable, ObjectDataComponent::new);
+    public static final DataComponentType<Unit> UNBREAKABLE = new DataComponentType<>("unbreakable", unitReader(), unitWriter(), ObjectDataComponent::new);
     public static final DataComponentType<Component> CUSTOM_NAME = new DataComponentType<>("custom_name", MinecraftTypes::readComponent, MinecraftTypes::writeComponent, ObjectDataComponent::new);
     public static final DataComponentType<Component> ITEM_NAME = new DataComponentType<>("item_name", MinecraftTypes::readComponent, MinecraftTypes::writeComponent, ObjectDataComponent::new);
     public static final DataComponentType<Key> ITEM_MODEL = new DataComponentType<>("item_model", MinecraftTypes::readResourceLocation, MinecraftTypes::writeResourceLocation, ObjectDataComponent::new);
@@ -39,8 +40,7 @@ public class DataComponentType<T> {
     public static final DataComponentType<AdventureModePredicate> CAN_BREAK = new DataComponentType<>("can_break", ItemTypes::readAdventureModePredicate, ItemTypes::writeAdventureModePredicate, ObjectDataComponent::new);
     public static final DataComponentType<ItemAttributeModifiers> ATTRIBUTE_MODIFIERS = new DataComponentType<>("attribute_modifiers", ItemTypes::readItemAttributeModifiers, ItemTypes::writeItemAttributeModifiers, ObjectDataComponent::new);
     public static final DataComponentType<CustomModelData> CUSTOM_MODEL_DATA = new DataComponentType<>("custom_model_data", ItemTypes::readCustomModelData, ItemTypes::writeCustomModelData, ObjectDataComponent::new);
-    public static final DataComponentType<Unit> HIDE_ADDITIONAL_TOOLTIP = new DataComponentType<>("hide_additional_tooltip", unitReader(), unitWriter(), ObjectDataComponent::new);
-    public static final DataComponentType<Unit> HIDE_TOOLTIP = new DataComponentType<>("hide_tooltip", unitReader(), unitWriter(), ObjectDataComponent::new);
+    public static final DataComponentType<TooltipDisplay> TOOLTIP_DISPLAY = new DataComponentType<>("tooltip_display", ItemTypes::readTooltipDisplay, ItemTypes::writeTooltipDisplay, ObjectDataComponent::new);
     public static final IntComponentType REPAIR_COST = new IntComponentType("repair_cost", MinecraftTypes::readVarInt, MinecraftTypes::writeVarInt, IntDataComponent::new);
     public static final DataComponentType<Unit> CREATIVE_SLOT_LOCK = new DataComponentType<>("creative_slot_lock", unitReader(), unitWriter(), ObjectDataComponent::new);
     public static final BooleanComponentType ENCHANTMENT_GLINT_OVERRIDE = new BooleanComponentType("enchantment_glint_override", ByteBuf::readBoolean, ByteBuf::writeBoolean, BooleanDataComponent::new);
@@ -58,8 +58,9 @@ public class DataComponentType<T> {
     public static final DataComponentType<Unit> GLIDER = new DataComponentType<>("glider", unitReader(), unitWriter(), ObjectDataComponent::new);
     public static final DataComponentType<Key> TOOLTIP_STYLE = new DataComponentType<>("tooltip_style", MinecraftTypes::readResourceLocation, MinecraftTypes::writeResourceLocation, ObjectDataComponent::new);
     public static final DataComponentType<List<ConsumeEffect>> DEATH_PROTECTION = new DataComponentType<>("death_protection", listReader(ItemTypes::readConsumeEffect), listWriter(ItemTypes::writeConsumeEffect), ObjectDataComponent::new);
+    public static final DataComponentType<BlocksAttacks> BLOCKS_ATTACKS = new DataComponentType<>("blocks_attacks", ItemTypes::readBlocksAttacks, ItemTypes::writeBlocksAttacks, ObjectDataComponent::new);
     public static final DataComponentType<ItemEnchantments> STORED_ENCHANTMENTS = new DataComponentType<>("stored_enchantments", ItemTypes::readItemEnchantments, ItemTypes::writeItemEnchantments, ObjectDataComponent::new);
-    public static final DataComponentType<DyedItemColor> DYED_COLOR = new DataComponentType<>("dyed_color", ItemTypes::readDyedItemColor, ItemTypes::writeDyedItemColor, ObjectDataComponent::new);
+    public static final IntComponentType DYED_COLOR = new IntComponentType("dyed_color", ByteBuf::readInt, ByteBuf::writeInt, IntDataComponent::new);
     public static final IntComponentType MAP_COLOR = new IntComponentType("map_color", ByteBuf::readInt, ByteBuf::writeInt, IntDataComponent::new);
     public static final IntComponentType MAP_ID = new IntComponentType("map_id", MinecraftTypes::readVarInt, MinecraftTypes::writeVarInt, IntDataComponent::new);
     public static final DataComponentType<NbtMap> MAP_DECORATIONS = new DataComponentType<>("map_decorations", MinecraftTypes::readCompoundTag, MinecraftTypes::writeAnyTag, ObjectDataComponent::new);
@@ -76,9 +77,11 @@ public class DataComponentType<T> {
     public static final DataComponentType<NbtMap> ENTITY_DATA = new DataComponentType<>("entity_data", MinecraftTypes::readCompoundTag, MinecraftTypes::writeAnyTag, ObjectDataComponent::new);
     public static final DataComponentType<NbtMap> BUCKET_ENTITY_DATA = new DataComponentType<>("bucket_entity_data", MinecraftTypes::readCompoundTag, MinecraftTypes::writeAnyTag, ObjectDataComponent::new);
     public static final DataComponentType<NbtMap> BLOCK_ENTITY_DATA = new DataComponentType<>("block_entity_data", MinecraftTypes::readCompoundTag, MinecraftTypes::writeAnyTag, ObjectDataComponent::new);
-    public static final DataComponentType<Holder<Instrument>> INSTRUMENT = new DataComponentType<>("instrument", ItemTypes::readInstrument, ItemTypes::writeInstrument, ObjectDataComponent::new);
+    public static final DataComponentType<InstrumentComponent> INSTRUMENT = new DataComponentType<>("instrument", ItemTypes::readInstrumentComponent, ItemTypes::writeInstrumentComponent, ObjectDataComponent::new);
+    public static final DataComponentType<ProvidesTrimMaterial> PROVIDES_TRIM_MATERIAL = new DataComponentType<>("provides_trim_material", ItemTypes::readProvidesTrimMaterial, ItemTypes::writeProvidesTrimMaterial, ObjectDataComponent::new);
     public static final IntComponentType OMINOUS_BOTTLE_AMPLIFIER = new IntComponentType("ominous_bottle_amplifier", MinecraftTypes::readVarInt, MinecraftTypes::writeVarInt, IntDataComponent::new);
     public static final DataComponentType<JukeboxPlayable> JUKEBOX_PLAYABLE = new DataComponentType<>("jukebox_playable", ItemTypes::readJukeboxPlayable, ItemTypes::writeJukeboxPlayable, ObjectDataComponent::new);
+    public static final DataComponentType<Key> PROVIDES_BANNER_PATTERNS = new DataComponentType<>("provides_banner_patterns", MinecraftTypes::readResourceLocation, MinecraftTypes::writeResourceLocation, ObjectDataComponent::new);
     public static final DataComponentType<NbtList<?>> RECIPES = new DataComponentType<>("recipes", ItemTypes::readRecipes, ItemTypes::writeRecipes, ObjectDataComponent::new);
     public static final DataComponentType<LodestoneTracker> LODESTONE_TRACKER = new DataComponentType<>("lodestone_tracker", ItemTypes::readLodestoneTarget, ItemTypes::writeLodestoneTarget, ObjectDataComponent::new);
     public static final DataComponentType<Fireworks.FireworkExplosion> FIREWORK_EXPLOSION = new DataComponentType<>("firework_explosion", ItemTypes::readFireworkExplosion, ItemTypes::writeFireworkExplosion, ObjectDataComponent::new);
@@ -93,6 +96,7 @@ public class DataComponentType<T> {
     public static final DataComponentType<List<BeehiveOccupant>> BEES = new DataComponentType<>("bees", listReader(ItemTypes::readBeehiveOccupant), listWriter(ItemTypes::writeBeehiveOccupant), ObjectDataComponent::new);
     public static final DataComponentType<NbtMap> LOCK = new DataComponentType<>("lock", MinecraftTypes::readCompoundTag, MinecraftTypes::writeAnyTag, ObjectDataComponent::new);
     public static final DataComponentType<NbtMap> CONTAINER_LOOT = new DataComponentType<>("container_loot", MinecraftTypes::readCompoundTag, MinecraftTypes::writeAnyTag, ObjectDataComponent::new);
+    public static final DataComponentType<Sound> BREAK_SOUND = new DataComponentType<>("break_sound", MinecraftTypes::readSound, MinecraftTypes::writeSound, ObjectDataComponent::new);
     public static final IntComponentType VILLAGER_VARIANT = new IntComponentType("villager/variant", MinecraftTypes::readVarInt, MinecraftTypes::writeVarInt, IntDataComponent::new);
     public static final DataComponentType<Holder<WolfVariant>> WOLF_VARIANT = new DataComponentType<>("wolf/variant", MinecraftTypes::readWolfVariant, MinecraftTypes::writeWolfVariant, ObjectDataComponent::new);
     public static final IntComponentType WOLF_COLLAR = new IntComponentType("wolf/collar", MinecraftTypes::readVarInt, MinecraftTypes::writeVarInt, IntDataComponent::new);
