@@ -249,7 +249,7 @@ public class ItemTypes {
 
     public static TooltipDisplay readTooltipDisplay(ByteBuf buf) {
         boolean hideTooltip = buf.readBoolean();
-        List<DataComponentType<?>> hiddenComponents = MinecraftTypes.readList(buf, input -> DataComponentType.from(MinecraftTypes.readVarInt(input)));
+        List<DataComponentType<?>> hiddenComponents = MinecraftTypes.readList(buf, input -> DataComponentTypes.from(MinecraftTypes.readVarInt(input)));
         return new TooltipDisplay(hideTooltip, hiddenComponents);
     }
 
