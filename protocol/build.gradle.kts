@@ -1,9 +1,11 @@
+import java.net.URI
+
 plugins {
     id("mcprotocollib.publish-conventions")
     jacoco
 }
 
-version = "1.21.5-SNAPSHOT"
+version = "1.21.7-SNAPSHOT"
 description = "MCProtocolLib is a simple library for communicating with Minecraft clients and servers."
 
 dependencies {
@@ -49,5 +51,22 @@ tasks.jacocoTestReport {
         xml.required = false
         csv.required = false
         html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "geysermc"
+            url = URI.create(
+                when {
+                    version.toString().endsWith("-SNAPSHOT") ->
+                        "https://repo.opencollab.dev/maven-snapshots"
+                    else ->
+                        "https://repo.opencollab.dev/maven-releases"
+                }
+            )
+            credentials(PasswordCredentials::class.java)
+        }
     }
 }
