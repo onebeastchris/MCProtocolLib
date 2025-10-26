@@ -1,4 +1,9 @@
 # MCProtocolLib
+![protocol snapshot](https://img.shields.io/badge/dynamic/xml
+?url=https%3A%2F%2Frepo.opencollab.dev%2Fmaven-snapshots%2Forg%2Fgeysermc%2Fmcprotocollib%2Fprotocol%2F1.21.9-SNAPSHOT%2Fmaven-metadata.xml
+&query=%2F%2Fmetadata%2Fversioning%2FsnapshotVersions%2FsnapshotVersion%5Blast()%5D%2Fvalue
+&label=protocol%20build)
+
 
 MCProtocolLib is a simple library for communicating with Minecraft clients and servers. It allows developers to build custom bots, clients, or servers for Minecraft with ease.
 
